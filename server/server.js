@@ -44,6 +44,7 @@ app.get('/api/addMembers', (req, res) => {
   addmembers('CAN', 'NAYIKA', 'SRINIAN', new Date('Nov 10, 1997'), 160, 'Bangkok', ['SW(CloneTrooper)', 'CD'], 'B', ["ฟังเพลง", "ดูหนัง", "เที่ยวนอกบ้าน"], 1)
   addmembers('IZURINA', 'RINA', 'IZUTA', new Date('Nov 26, 1995'), 158, 'Saitama, Japan', ['Fashion'], 'A', ["เดินห้าง"], 1)
   addmembers('JAA', 'NAPAPHAT', 'WORRAPHUTTANON', new Date('Jan 20, 2003'), 160, 'Bangkok', ['แมว', 'ผ้าเน่า', 'หมอนข้าง'], 'B', ["ฟังเพลง", 'เล่นflute', 'ดูหนัง'], 1)
+  addmembers('JANE', 'KUNJIRANUT', 'INTARASIN', new Date('Mar 23, 2000'), 159, 'Pathum Thani', ['Fashion'], 'A', ["เดินห้าง"], 1)
 
   console.log('Add Members to Cloud Firestore successfully.')
   res.send('Add Members to Cloud Firestore successfully.')
