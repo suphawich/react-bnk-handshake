@@ -16,7 +16,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <App />
+    <App mobileSize={320} />
   </MuiThemeProvider>
   , document.getElementById('root'));
 registerServiceWorker();

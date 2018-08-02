@@ -1,7 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import React from 'react'
+import Media from 'react-media'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
 
 const styles = theme => ({
   root: {
@@ -12,42 +13,59 @@ const styles = theme => ({
   },
   table: {
     width: "100%",
-    fontSize: "12px",
+    fontSize: "8px",
     // height: theme.spacing.unit * 38,
   },
   norow: {
     textAlign: "center",
     height: theme.spacing.unit * 34,
   },
+  norowMobile: {
+    textAlign: "center",
+    height: theme.spacing.unit * 14,
+  },
   tableCell: {
-    // maxHeight: "8px"
+    fontSize: "7px"
   }
 });
 
 class SimpleTable extends React.Component {
   render() {
     const { classes } = this.props
+    let mobileSize = this.props.mobileSize || 320
+
     return (
       <Paper className={classes.root}>
         <table className={classes.table}>
           <thead>
             <tr>
-              <th >Name</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
-              <th >9:00-10:30</th>
+              <th className={classes.tableCell}>Name</th>
+              <th className={classes.tableCell}>9:00-10:30</th>
+              <th className={classes.tableCell}>10:30-12:00</th>
+              <th className={classes.tableCell}>12:00-13:30</th>
+              <th className={classes.tableCell}>13:30-15:00</th>
+              <th className={classes.tableCell}>15:00-16:30</th>
+              <th className={classes.tableCell}>16:30-18:00</th>
+              <th className={classes.tableCell}>18:30-21:30</th>
             </tr>
           </thead>
           {this.props.members.length === 0 ? (
-            <tbody>
-              <tr className={classes.norow}>
-                <td colSpan={8}>Please, select member first step.</td>
-              </tr>
-            </tbody>
+            <Media query={{ maxWidth: mobileSize }}>
+            {matches =>
+              matches ? (
+                <tbody>
+                  <tr className={classes.norowMobile}>
+                    <td colSpan={8}>Please, select member first step.</td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  <tr className={classes.norow}>
+                    <td colSpan={8}>Please, select member first step.</td>
+                  </tr>
+                </tbody>
+              )}
+            </Media>
           ) : (
             <tbody>
               {this.props.members.map(member => (

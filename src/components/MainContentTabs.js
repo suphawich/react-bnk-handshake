@@ -1,4 +1,5 @@
 import React from 'react'
+import Media from 'react-media'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import SwipeableViews from 'react-swipeable-views'
@@ -9,12 +10,21 @@ import Typography from '@material-ui/core/Typography'
 
 import SimpleTable from './SimpleTable'
 
-function TabContainer({ children, dir }) {
+function TabContainer({ children, dir, mobileSize }) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
-    </Typography>
-  );
+    <Media query={{ maxWidth: mobileSize }}>
+    {matches =>
+      matches ? (
+        <Typography component="div" dir={dir} style={{ padding: 8 * 1 }}>
+          {children}
+        </Typography>
+      ) : (
+        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+          {children}
+        </Typography>
+      )}
+    </Media>
+  )
 }
 
 TabContainer.propTypes = {
@@ -43,7 +53,8 @@ class MainContentTabs extends React.Component {
   };
 
   render() {
-    const { theme } = this.props;
+    const { theme } = this.props
+    let mobileSize = this.props.mobileSize || 320
 
     return (
       <div>
@@ -66,10 +77,10 @@ class MainContentTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}><SimpleTable members={this.props.membersTabOne} /></TabContainer>
-          <TabContainer dir={theme.direction}><SimpleTable members={this.props.membersTabTwo} /></TabContainer>
-          <TabContainer dir={theme.direction}><SimpleTable members={this.props.membersTabThree} /></TabContainer>
-          <TabContainer dir={theme.direction}><SimpleTable members={this.props.membersTabFour} /></TabContainer>
+          <TabContainer dir={theme.direction} mobileSize={mobileSize}><SimpleTable members={this.props.membersTabOne} mobileSize={mobileSize} /></TabContainer>
+          <TabContainer dir={theme.direction} mobileSize={mobileSize}><SimpleTable members={this.props.membersTabTwo} mobileSize={mobileSize} /></TabContainer>
+          <TabContainer dir={theme.direction} mobileSize={mobileSize}><SimpleTable members={this.props.membersTabThree} mobileSize={mobileSize} /></TabContainer>
+          <TabContainer dir={theme.direction} mobileSize={mobileSize}><SimpleTable members={this.props.membersTabFour} mobileSize={mobileSize} /></TabContainer>
         </SwipeableViews>
       </div>
     );

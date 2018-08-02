@@ -1,12 +1,38 @@
 import React, { Component } from 'react'
+import Media from 'react-media'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
+import compose from 'recompose/compose'
+import withWidth from '@material-ui/core/withWidth'
 import MainContentTabs from './components/MainContentTabs'
 import SelectMembersTabs from './components/SelectMembersTabs'
 import Option from './components/Option'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Drawer from '@material-ui/core/Drawer'
+import Hidden from '@material-ui/core/Hidden'
 
 const liff = window.liff
+
+const styles = theme => ({
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "pink",
+    overflowX: "hidden"
+  },
+  container: {
+    paddingBottom: "3%"
+  },
+  headline: {
+    marginTop: "2%",
+    marginBottom: "3%",
+    [theme.breakpoints.down(320)]: {
+      fontSize: "16px"
+    }
+  },
+})
 
 class App extends Component {
 
@@ -16,6 +42,7 @@ class App extends Component {
       selectedMembers: [],
       members: [],
       schedule: {},
+      mobileDrawer: false,
       checkedSBR: true,
       displayName: '',
       userId: '',
@@ -155,53 +182,106 @@ class App extends Component {
     this.setState({checkedSBR: status})
   }
 
+  toggleMobileDrawer = () => {
+    let oldStatus = this.state.mobileDrawer
+    this.setState({mobileDrawer: !oldStatus})
+  }
+
   render() {
+    const { classes } = this.props
+    let mobileSize = this.props.mobileSize || 320
     return (
-      <div className="App" style={{minHeight: "100vh", backgroundColor: "pink"}}>
-        <Grid container spacing={24} justify="center" style={{paddingBottom: "3%"}}>
-          <Grid item xs={12}>
-            <Typography variant="headline" align="center" style={{marginTop: "2%", marginBottom: "3%" }}>
+      <div className={classes.root}>
+        <Grid container spacing={0} justify="center" className={classes.container}>
+          <Grid item xs={11}>
+            <Typography variant="headline" align="center" className={classes.headline}>
               BNK48 3rd Handshake Event 18 - 19 Aug
             </Typography>
           </Grid>
           <Grid container spacing={24} justify="center">
-            <Grid item xs={6}>
+            <Grid item xs={11} md={6}>
               <Paper>
                 <MainContentTabs
                   membersTabOne={this.selectedMembers('Aug-18-2018')}
                   membersTabTwo={this.selectedMembers('Aug-19-2018')}
                   membersTabThree={this.selectedMembers('Nov-03-2018')}
                   membersTabFour={this.selectedMembers('Nov-04-2018')}
+                  mobileSize={mobileSize}
                 />
               </Paper>
             </Grid>
-            <Grid item xs={4}>
-              <Grid container spacing={24} justify="center">
-                <Grid item xs={12}>
-                  <Paper>
-                    <SelectMembersTabs
-                      callback={this.selectedMember}
-                      isSelected={this.isSelected}
-                      members={this.state.members}
-                    />
-                  </Paper>
-                </Grid>
-                <Grid item xs={12}>
-                  <Paper>
-                    <Option
-                      checkedSBR={this.state.checkedSBR}
-                      handleCheckedSBR={this.handleCheckedSBR}
-                      clearSelectedMembers={this.clearSelectedMembers}
-                    />
-                  </Paper>
+            <Hidden smDown>
+              <Grid item xs={11} md={4}>
+                <Grid container spacing={24} justify="center">
+                  <Grid item xs={12}>
+                    <Paper>
+                      <SelectMembersTabs
+                        callback={this.selectedMember}
+                        isSelected={this.isSelected}
+                        members={this.state.members}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Paper>
+                      <Option
+                        checkedSBR={this.state.checkedSBR}
+                        handleCheckedSBR={this.handleCheckedSBR}
+                        clearSelectedMembers={this.clearSelectedMembers}
+                      />
+                    </Paper>
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
+            </Hidden>
           </Grid>
         </Grid>
+        <Hidden mdUp>
+          <div>
+            <Button variant="fab" color="secondary" aria-label="Add" style={{position: "fixed", bottom: "3vh", right: "3vh"}} onClick={(e) => this.toggleMobileDrawer()}>
+              {/* <AddIcon /> */}+
+            </Button>
+            <Drawer
+              anchor="bottom"
+              open={this.state.mobileDrawer}
+              onClose={(e) => this.toggleMobileDrawer()}>
+              <div style={{maxHeight: "65vh", overflowX: "hidden"}}>
+                <Grid container spacing={24} justify="center">
+                  <Grid item xs={12}>
+                    <Paper>
+                      <SelectMembersTabs
+                        callback={this.selectedMember}
+                        isSelected={this.isSelected}
+                        members={this.state.members}
+                      />
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Paper>
+                      <Option
+                        checkedSBR={this.state.checkedSBR}
+                        handleCheckedSBR={this.handleCheckedSBR}
+                        clearSelectedMembers={this.clearSelectedMembers}
+                      />
+                    </Paper>
+                  </Grid>
+                </Grid>
+              </div>
+            </Drawer>
+          </div>
+        </Hidden>
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+  width: PropTypes.string,
+};
+
+export default compose(
+  withStyles(styles),
+  withWidth(),
+)(App)

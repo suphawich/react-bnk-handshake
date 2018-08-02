@@ -18,7 +18,7 @@ class ButtonMembers extends React.Component {
     return (
       <div style={{textAlign: "center"}}>
         {this.props.members.map(member => (
-          <Button variant="outlined" color={this.props.isSelected(member.nickname) ? 'primary' : 'secondary'} style={{fontSize: "12px", margin: "4px" }} key={member.nickname} onClick={(e) => this.toggleMember(member.nickname, this.props.callback, e)}>{member.nickname}</Button>
+          <Button variant="outlined" color={this.props.isSelected(member.nickname) ? 'primary' : 'secondary'} style={{fontSize: "10px", margin: "2px" }} key={member.nickname} onClick={(e) => this.toggleMember(member.nickname, this.props.callback, e)}>{member.nickname}</Button>
         ))}
       </div>
     );
