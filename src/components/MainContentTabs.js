@@ -15,11 +15,11 @@ function TabContainer({ children, dir, mobileSize }) {
     <Media query={{ maxWidth: mobileSize }}>
     {matches =>
       matches ? (
-        <Typography component="div" dir={dir} style={{ padding: 8 * 1 }}>
+        <Typography component="div" dir={dir} style={{ padding: 8 * 1}}>
           {children}
         </Typography>
       ) : (
-        <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+        <Typography component="div" dir={dir} style={{ padding: 8 * 3}}>
           {children}
         </Typography>
       )}
@@ -37,6 +37,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     width: 500,
   },
+  tabs: {
+    backgroundColor: theme.palette.primary.main
+  }
 });
 
 class MainContentTabs extends React.Component {
@@ -53,7 +56,7 @@ class MainContentTabs extends React.Component {
   };
 
   render() {
-    const { theme } = this.props
+    const { classes, theme } = this.props
     let mobileSize = this.props.mobileSize || 320
 
     return (
@@ -62,9 +65,10 @@ class MainContentTabs extends React.Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
+            indicatorColor="secondary"
+            textColor="secondary"
             fullWidth
+            className={classes.tabs}
           >
             <Tab label="18 August" />
             <Tab label="19 August" />

@@ -25,9 +25,8 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    // width: 500,
   },
-});
+})
 
 class SelectMembersTabs extends React.Component { 
   constructor(props) {
@@ -66,9 +65,10 @@ class SelectMembersTabs extends React.Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
+            indicatorColor="secondary"
+            textColor="secondary"
             fullWidth
+            className={classes.tabs}
           >
             <Tab label="Gen 1" />
             <Tab label="Gen 2" />
@@ -94,6 +94,6 @@ class SelectMembersTabs extends React.Component {
 SelectMembersTabs.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-};
+}
 
 export default withStyles(styles, { withTheme: true })(SelectMembersTabs);

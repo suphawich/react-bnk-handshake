@@ -1,5 +1,19 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
+
+
+const styles = theme => ({
+  selected: {
+    fontSize: "10px",
+    margin: "2px",
+  },
+  noSelected: {
+    fontSize: "10px",
+    margin: "2px",
+  }
+})
 
 class ButtonMembers extends React.Component {
   constructor(props) {
@@ -15,14 +29,28 @@ class ButtonMembers extends React.Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
       <div style={{textAlign: "center"}}>
         {this.props.members.map(member => (
-          <Button variant="outlined" color={this.props.isSelected(member.nickname) ? 'primary' : 'secondary'} style={{fontSize: "10px", margin: "2px" }} key={member.nickname} onClick={(e) => this.toggleMember(member.nickname, this.props.callback, e)}>{member.nickname}</Button>
+          <Button
+            variant="outlined"
+            color={this.props.isSelected(member.nickname) ? 'secondary' : 'primary'}
+            className={this.props.isSelected(member.nickname) ? classes.selected : classes.noSelected}
+            key={member.nickname}
+            onClick={(e) => this.toggleMember(member.nickname, this.props.callback, e)}
+          >
+            {member.nickname}
+          </Button>
         ))}
       </div>
     );
   }
 }
 
-export default ButtonMembers
+ButtonMembers.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles, { withTheme: true })(ButtonMembers)

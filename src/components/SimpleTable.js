@@ -1,5 +1,4 @@
 import React from 'react'
-import Media from 'react-media'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -14,70 +13,66 @@ const styles = theme => ({
   table: {
     width: "100%",
     fontSize: "8px",
-    // height: theme.spacing.unit * 38,
   },
   norow: {
     textAlign: "center",
     height: theme.spacing.unit * 34,
+    [theme.breakpoints.down(320)]: {
+      height: theme.spacing.unit * 14,
+    }
   },
-  norowMobile: {
+  cellName: {
+    backgroundColor: '',
+  },
+  cellRound: {
+    backgroundColor: theme.palette.secondary.main,
+  },
+  tableRow: {
     textAlign: "center",
-    height: theme.spacing.unit * 14,
-  },
-  tableCell: {
-    fontSize: "7px"
+    fontSize: "12px",
+    [theme.breakpoints.down(500)]: {
+      fontSize: "7px"
+    },
   }
-});
+})
 
 class SimpleTable extends React.Component {
   render() {
     const { classes } = this.props
-    let mobileSize = this.props.mobileSize || 320
 
     return (
       <Paper className={classes.root}>
-        <table className={classes.table}>
+        <table className={classes.table} cellspacing="0" botder="1">
           <thead>
-            <tr>
-              <th className={classes.tableCell}>Name</th>
-              <th className={classes.tableCell}>9:00-10:30</th>
-              <th className={classes.tableCell}>10:30-12:00</th>
-              <th className={classes.tableCell}>12:00-13:30</th>
-              <th className={classes.tableCell}>13:30-15:00</th>
-              <th className={classes.tableCell}>15:00-16:30</th>
-              <th className={classes.tableCell}>16:30-18:00</th>
-              <th className={classes.tableCell}>18:30-21:30</th>
+            <tr className={classes.tableRow}>
+              <th >Name</th>
+              <th>9:00-10:30</th>
+              <th>10:30-12:00</th>
+              <th>12:00-13:30</th>
+              <th>13:30-15:00</th>
+              <th>15:00-16:30</th>
+              <th>16:30-18:00</th>
+              <th>18:30-21:30</th>
             </tr>
           </thead>
           {this.props.members.length === 0 ? (
-            <Media query={{ maxWidth: mobileSize }}>
-            {matches =>
-              matches ? (
-                <tbody>
-                  <tr className={classes.norowMobile}>
-                    <td colSpan={8}>Please, select member first step.</td>
-                  </tr>
-                </tbody>
-              ) : (
-                <tbody>
-                  <tr className={classes.norow}>
-                    <td colSpan={8}>Please, select member first step.</td>
-                  </tr>
-                </tbody>
-              )}
-            </Media>
+            <tbody>
+              <tr className={classes.norow}>
+                <td colSpan={8}>Please, select member first step.</td>
+              </tr>
+            </tbody>
           ) : (
             <tbody>
               {this.props.members.map(member => (
-                <tr key={member.nickname} style={{textAlign: "center"}}>
-                  <td className={classes.tableCell}>{member.nickname}</td>
-                  <td className={classes.tableCell}>{member.rounds[0] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[1] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[2] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[3] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[4] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[5] ? 'O' : '-'}</td>
-                  <td className={classes.tableCell}>{member.rounds[6] ? 'O' : '-'}</td>
+                <tr key={member.nickname} className={classes.tableRow}>
+                  <td className={classes.cellName}>{member.nickname}</td>
+                  <td className={member.rounds[0] ? classes.cellRound : ''}>{member.rounds[0] ? 'O' : '-'}</td>
+                  <td className={member.rounds[1] ? classes.cellRound : ''}>{member.rounds[1] ? 'O' : '-'}</td>
+                  <td className={member.rounds[2] ? classes.cellRound : ''}>{member.rounds[2] ? 'O' : '-'}</td>
+                  <td className={member.rounds[3] ? classes.cellRound : ''}>{member.rounds[3] ? 'O' : '-'}</td>
+                  <td className={member.rounds[4] ? classes.cellRound : ''}>{member.rounds[4] ? 'O' : '-'}</td>
+                  <td className={member.rounds[5] ? classes.cellRound : ''}>{member.rounds[5] ? 'O' : '-'}</td>
+                  <td className={member.rounds[6] ? classes.cellRound : ''}>{member.rounds[6] ? 'O' : '-'}</td>
                 </tr>
               ))}
             </tbody>
@@ -90,6 +85,7 @@ class SimpleTable extends React.Component {
 
 SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+  theme: PropTypes.object.isRequired,
+}
 
 export default withStyles(styles)(SimpleTable);

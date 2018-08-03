@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Media from 'react-media'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import compose from 'recompose/compose'
@@ -70,7 +69,6 @@ class App extends Component {
   }
 
   clearSelectedMembers = () => {
-    // if (this.state.selectedMembers.length > 0 && !window.confirm('Do you want clear all selected members?')) return
     this.setState({selectedMembers: []})
   }
 
@@ -116,22 +114,23 @@ class App extends Component {
   }
 
   componentDidMount() {
+    let urlServer = 'https://server-react-bnk-handshake.herokuapp.com'
     window.addEventListener('load', this.initialize)
-    fetch('/api/members')
+    fetch(urlServer + '/api/members')
       .then(response => response.json())
       .then(json => {
         this.setState({ members: json })
       })
 
     // 3RD HANDSHAKE EVENTS
-    fetch('/api/3rdhandshake/Aug-18-2018')
+    fetch(urlServer + '/api/3rdhandshake/Aug-18-2018')
       .then(response => response.json())
       .then(json => {
         let schedule = this.state.schedule
         schedule['Aug-18-2018'] = json
         this.setState({ schedule: schedule })
       })
-    fetch('/api/3rdhandshake/Aug-19-2018')
+    fetch(urlServer + '/api/3rdhandshake/Aug-19-2018')
       .then(response => response.json())
       .then(json => {
         let schedule = this.state.schedule
@@ -140,14 +139,14 @@ class App extends Component {
       })
 
     // 4TH HANDSHAKE EVENTS
-    fetch('/api/4thhandshake/Nov-03-2018')
+    fetch(urlServer + '/api/4thhandshake/Nov-03-2018')
       .then(response => response.json())
       .then(json => {
         let schedule = this.state.schedule
         schedule['Nov-03-2018'] = json
         this.setState({ schedule: schedule })
       })
-    fetch('/api/4thhandshake/Nov-04-2018')
+    fetch(urlServer + '/api/4thhandshake/Nov-04-2018')
       .then(response => response.json())
       .then(json => {
         let schedule = this.state.schedule
@@ -212,7 +211,7 @@ class App extends Component {
             </Grid>
             <Hidden smDown>
               <Grid item xs={11} md={4}>
-                <Grid container spacing={24} justify="center">
+                <Grid container spacing={24}>
                   <Grid item xs={12}>
                     <Paper>
                       <SelectMembersTabs
