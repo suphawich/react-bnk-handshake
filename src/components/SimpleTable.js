@@ -12,13 +12,18 @@ const styles = theme => ({
   },
   table: {
     width: "100%",
-    fontSize: "8px",
+    textAlign: "center",
+    fontSize: "12px",
+    [theme.breakpoints.down(500)]: {
+      fontSize: "7px"
+    },
+    color: theme.palette.primary.main
   },
   norow: {
     textAlign: "center",
-    height: theme.spacing.unit * 34,
+    height: theme.spacing.unit * 26,
     [theme.breakpoints.down(320)]: {
-      height: theme.spacing.unit * 14,
+      height: theme.spacing.unit * 6,
     }
   },
   cellName: {
@@ -27,13 +32,6 @@ const styles = theme => ({
   cellRound: {
     backgroundColor: theme.palette.secondary.main,
   },
-  tableRow: {
-    textAlign: "center",
-    fontSize: "12px",
-    [theme.breakpoints.down(500)]: {
-      fontSize: "7px"
-    },
-  }
 })
 
 class SimpleTable extends React.Component {
@@ -42,7 +40,7 @@ class SimpleTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <table className={classes.table} cellspacing="0" botder="1">
+        <table className={classes.table} cellSpacing="0" botder="1">
           <thead>
             <tr className={classes.tableRow}>
               <th >Name</th>
@@ -64,7 +62,7 @@ class SimpleTable extends React.Component {
           ) : (
             <tbody>
               {this.props.members.map(member => (
-                <tr key={member.nickname} className={classes.tableRow}>
+                <tr key={member.nickname}>
                   <td className={classes.cellName}>{member.nickname}</td>
                   <td className={member.rounds[0] ? classes.cellRound : ''}>{member.rounds[0] ? 'O' : '-'}</td>
                   <td className={member.rounds[1] ? classes.cellRound : ''}>{member.rounds[1] ? 'O' : '-'}</td>
@@ -85,7 +83,6 @@ class SimpleTable extends React.Component {
 
 SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(SimpleTable);

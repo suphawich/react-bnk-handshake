@@ -14,7 +14,7 @@ class Option extends React.Component {
 
   render() {
     return (
-      <Grid style={{display: "flex", padding: "10px"}}>
+      <Grid container style={{display: "flex", padding: "10px 20px 10px 15px"}} justify="space-between">
         <FormControl>
           <FormGroup>
             <FormControlLabel

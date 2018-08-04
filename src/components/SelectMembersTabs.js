@@ -61,7 +61,7 @@ class SelectMembersTabs extends React.Component {
     
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
+        <AppBar position={this.props.position ? "fixed" : "static"} color="default">
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
@@ -78,6 +78,7 @@ class SelectMembersTabs extends React.Component {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
+          style={this.props.position ? {marginTop: "50px"} : {}}
         >
           <TabContainer dir={theme.direction}>
             <ButtonMembers callback={this.props.callback} isSelected={this.props.isSelected} members={genOne} />

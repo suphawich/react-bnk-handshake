@@ -35,10 +35,15 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
   },
   tabs: {
+    width: "100%",
     backgroundColor: theme.palette.primary.main
+  },
+  label: {
+    [theme.breakpoints.down('xs')]: {
+      fontSize: "11px",
+    }
   }
 });
 
@@ -70,10 +75,10 @@ class MainContentTabs extends React.Component {
             fullWidth
             className={classes.tabs}
           >
-            <Tab label="18 August" />
-            <Tab label="19 August" />
-            <Tab label="03 November" />
-            <Tab label="04 November" />
+            <Tab label="18 August" classes={{ label: classes.label }} />
+            <Tab label="19 August" classes={{ label: classes.label }} />
+            <Tab label="03 November" classes={{ label: classes.label }} />
+            <Tab label="04 November" classes={{ label: classes.label }} />
           </Tabs>
         </AppBar>
         <SwipeableViews

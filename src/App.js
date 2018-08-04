@@ -12,25 +12,43 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Drawer from '@material-ui/core/Drawer'
 import Hidden from '@material-ui/core/Hidden'
+import Icon from '@material-ui/core/Icon'
 
 const liff = window.liff
 
 const styles = theme => ({
   root: {
     minHeight: "100vh",
-    backgroundColor: "pink",
-    overflowX: "hidden"
+    overflowX: "hidden",
+    [theme.breakpoints.only('md')]: {
+      paddingLeft: "15px",
+      paddingRight: "15px"
+    }
   },
   container: {
-    paddingBottom: "3%"
+    marginBottom: "5%",
+    [theme.breakpoints.only('sm')]: {
+      marginBottom: "10%",
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: "20%"
+    }
   },
   headline: {
     marginTop: "2%",
     marginBottom: "3%",
-    [theme.breakpoints.down(320)]: {
+    [theme.breakpoints.only('sm')]: {
+      fontSize: "28px"
+    },
+    [theme.breakpoints.down('xs')]: {
       fontSize: "16px"
-    }
+    },
+    color: theme.palette.secondary.main
   },
+  memberDrawer: {
+    maxHeight: "65vh",
+    overflowX: "hidden"
+  }
 })
 
 class App extends Component {
@@ -198,7 +216,7 @@ class App extends Component {
             </Typography>
           </Grid>
           <Grid container spacing={24} justify="center">
-            <Grid item xs={11} md={6}>
+            <Grid item xs={11} md={8} lg={6}>
               <Paper>
                 <MainContentTabs
                   membersTabOne={this.selectedMembers('Aug-18-2018')}
@@ -238,13 +256,15 @@ class App extends Component {
         <Hidden mdUp>
           <div>
             <Button variant="fab" color="secondary" aria-label="Add" style={{position: "fixed", bottom: "3vh", right: "3vh"}} onClick={(e) => this.toggleMobileDrawer()}>
-              {/* <AddIcon /> */}+
+              <Icon color="primary">
+                arrow_upward
+              </Icon>
             </Button>
             <Drawer
               anchor="bottom"
               open={this.state.mobileDrawer}
               onClose={(e) => this.toggleMobileDrawer()}>
-              <div style={{maxHeight: "65vh", overflowX: "hidden"}}>
+              <div className={classes.memberDrawer}>
                 <Grid container spacing={24} justify="center">
                   <Grid item xs={12}>
                     <Paper>
@@ -252,6 +272,7 @@ class App extends Component {
                         callback={this.selectedMember}
                         isSelected={this.isSelected}
                         members={this.state.members}
+                        position={true}
                       />
                     </Paper>
                   </Grid>
@@ -276,7 +297,6 @@ class App extends Component {
 
 App.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
   width: PropTypes.string,
 };
 
